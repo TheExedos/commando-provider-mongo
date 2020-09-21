@@ -46,7 +46,7 @@ class MongoDBProvider extends SettingProvider {
 		this.client = client;
         
         // Load or create the settings collection
-        const collection = await this.db.collection('Log_Systhem_Setting');
+        const collection = await this.db.collection('Log_System_Settings');
         
         // Load all settings
         collection.find().forEach(doc => {
@@ -133,14 +133,14 @@ class MongoDBProvider extends SettingProvider {
 		if(!this.settings.has(guild)) return;
         this.settings.delete(guild);
         
-        const collection = await this.db.collection('Log_Systhem_Setting');
+        const collection = await this.db.collection('Log_System_Settings');
         return collection.deleteOne({ guild: guild !== 'global' ? guild : 0 });
     }
     
     async updateGuild(guild, settings) {
         guild = guild !== 'global' ? guild : 0;
 
-        const collection = await this.db.collection('Log_Systhem_Setting');
+        const collection = await this.db.collection('Log_System_Settings');
         return collection.updateOne({ guild }, { $set: { guild, settings } }, { upsert: true });
     }
 
